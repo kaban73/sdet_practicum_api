@@ -1,5 +1,6 @@
 package clients;
 
+import config.ApiConfig;
 import dto.EntityRequest;
 import dto.EntityResponse;
 
@@ -17,6 +18,7 @@ public class EntityClient {
      */
     public String createEntity(EntityRequest entityRequest) {
         return given()
+                .spec(ApiConfig.getRequestSpecification())
                 .body(entityRequest)
                 .when()
                 .post(BASE_PATH + "/create")
