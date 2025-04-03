@@ -1,10 +1,12 @@
 package tests;
 
-import clients.EntityClient;
 import dto.EntityRequest;
 import dto.EntityResponse;
+import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import org.testng.annotations.Test;
-import utils.TestDataGenerator;
 
 import java.util.List;
 
@@ -12,16 +14,14 @@ import static org.testng.Assert.assertNotEquals;
 import static org.testng.AssertJUnit.*;
 import static org.testng.AssertJUnit.assertTrue;
 
-public class GetAllEntitiesApiTest {
-    private final EntityClient entityClient = new EntityClient();
-
+@Epic("API Тесты")
+@Story("Получение списка сущностей")
+public class GetAllEntitiesApiTest extends BaseTest{
     @Test
+    @Description("Получение всех сущностей")
+    @Feature("Получение всех сущностей")
     public void testGetAllEntities() {
-        EntityRequest request = TestDataGenerator.generateValidEntityRequest();
-
-        String entityId = entityClient.createEntity(request);
-        assertNotNull(entityId);
-        assertFalse(entityId.isEmpty());
+        String entityId = createEntityAndGetId();
 
         List<EntityResponse> entities = entityClient.getAllEntities();
 
@@ -33,12 +33,10 @@ public class GetAllEntitiesApiTest {
     }
 
     @Test
+    @Description("Проверка пагинации")
+    @Feature("Получение сущностей через пагинацию")
     public  void testGetAllEntitiesWithPagination() {
-        EntityRequest request = TestDataGenerator.generateValidEntityRequest();
-
-        String entityId = entityClient.createEntity(request);
-        assertNotNull(entityId);
-        assertFalse(entityId.isEmpty());
+        createEntityAndGetId();
 
         List<EntityResponse> firstPage = entityClient.getAllEntitiesWithFilters(null, null, 1, 1);
 
@@ -50,6 +48,8 @@ public class GetAllEntitiesApiTest {
     }
 
     @Test
+    @Description("Фильтрация по заголовку")
+    @Feature("Получение сущностей по заголовку")
     public void testGetAllEntitiesWithTitleFilter() {
         String uniqueTitle = "UNIQUE_TITLE_" + System.currentTimeMillis();
 
@@ -71,6 +71,8 @@ public class GetAllEntitiesApiTest {
     }
 
     @Test
+    @Description("Фильтрация по статусу verified")
+    @Feature("Получение сущностей по статусу verified")
     public void testGetAllEntitiesVerifiedFilter() {
         List<EntityResponse> verifiedEntities = entityClient.getAllEntitiesWithFilters(null, true, null, null);
 

@@ -1,32 +1,31 @@
 package tests;
 
-import clients.EntityClient;
-import dto.EntityRequest;
 import dto.EntityResponse;
+import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import org.testng.annotations.Test;
-import utils.TestDataGenerator;
 
 import java.util.List;
 
 import static org.testng.AssertJUnit.*;
 
-public class DeleteEntityApiTest {
-    private final EntityClient entityClient = new EntityClient();
-
+@Epic("API Тесты")
+@Story("Удаление сущности")
+public class DeleteEntityApiTest extends BaseTest {
     @Test
+    @Description("Проверка удаления сущности")
+    @Feature("Удаление сущности")
     public void testDeleteEntity() {
-        EntityRequest request = TestDataGenerator.generateValidEntityRequest();
-
-        String entityId = entityClient.createEntity(request);
-        assertNotNull(entityId);
-        assertFalse(entityId.isEmpty());
+        String entityId = createEntityAndGetId();
 
         entityClient.deleteEntity(entityId);
 
         List<EntityResponse> entities = entityClient.getAllEntities();
 
-        boolean isDeletedEntity = entities.stream()
-                .anyMatch(el -> el.getId() != Integer.parseInt(entityId));
-        assertTrue(isDeletedEntity);
+        boolean isEntityPresent = entities.stream()
+                .anyMatch(el -> el.getId() == Integer.parseInt(entityId));
+        assertFalse(isEntityPresent);
     }
 }

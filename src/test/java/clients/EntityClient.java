@@ -3,6 +3,7 @@ package clients;
 import config.ApiConfig;
 import dto.EntityRequest;
 import dto.EntityResponse;
+import io.qameta.allure.Step;
 
 import java.util.List;
 
@@ -16,6 +17,7 @@ public class EntityClient {
      * @param entityRequest DTO с данными для создания
      * @return ID созданной сущности
      */
+    @Step("Создать новую сущность")
     public String createEntity(EntityRequest entityRequest) {
         return given()
                 .spec(ApiConfig.getRequestSpecification())
@@ -34,6 +36,7 @@ public class EntityClient {
      * @param id ID сущности
      * @return DTO с данными сущности
      */
+    @Step("Получить сущность по ID = {id}")
     public EntityResponse getEntity(String id) {
         return given()
                 .when()
@@ -48,6 +51,7 @@ public class EntityClient {
      * Получение списка всех сущностей
      * @return Список DTO сущностей
      */
+    @Step("Получить список всех сущностей")
     public List<EntityResponse> getAllEntities() {
         return given()
                 .when()
@@ -67,6 +71,7 @@ public class EntityClient {
      * @param perPage Количество элементов на странице
      * @return Список DTO сущностей
      */
+    @Step("Получить отфильтрованный список сущностей [title: {title}, verified: {verified}, page: {page}, perPage: {perPage}]")
     public List<EntityResponse> getAllEntitiesWithFilters(
             String title,
             Boolean verified,
@@ -92,6 +97,7 @@ public class EntityClient {
      * @param id ID сущности
      * @param entityRequest DTO с данными для обновления
      */
+    @Step("Обновить сущность с ID = {id}")
     public void updateEntity(String id, EntityRequest entityRequest) {
         given()
                 .spec(ApiConfig.getRequestSpecification())
@@ -106,6 +112,7 @@ public class EntityClient {
      * Удаление сущности
      * @param id ID сущности
      */
+    @Step("Удалить сущность с ID = {id}")
     public void deleteEntity(String id) {
         given()
                 .when()

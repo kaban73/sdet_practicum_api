@@ -1,5 +1,6 @@
 package config;
 
+import io.qameta.allure.Description;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
@@ -14,6 +15,7 @@ public class ApiConfig {
     }
 
     @BeforeSuite
+    @Description("Инициализация базовых настроек RestAssured")
     public void setup() {
         configureRestAssured();
     }
