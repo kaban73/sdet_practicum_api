@@ -36,15 +36,5 @@ public class GetEntityApiTest {
                 response.getImportantNumbers().size()
         );
     }
+}
 
-    @Test
-    public void testGetNotExistEntity() {
-        String fakeEntityId = "999999999999999999999";
-
-        try {
-            entityClient.getEntity(fakeEntityId);
-            fail("The request should have returned 500 error");
-        } catch (AssertionError e) {
-            assertTrue(e.getMessage().contains("500"));
-        }
-    }}

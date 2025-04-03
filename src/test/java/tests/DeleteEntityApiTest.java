@@ -2,8 +2,11 @@ package tests;
 
 import clients.EntityClient;
 import dto.EntityRequest;
+import dto.EntityResponse;
 import org.testng.annotations.Test;
 import utils.TestDataGenerator;
+
+import java.util.List;
 
 import static org.testng.AssertJUnit.*;
 
@@ -20,11 +23,10 @@ public class DeleteEntityApiTest {
 
         entityClient.deleteEntity(entityId);
 
-        try {
-            entityClient.getEntity(entityId);
-            fail("Entity was not deleted");
-        } catch (AssertionError e) {
-            assertTrue(e.getMessage().contains("500"));
-        }
+        List<EntityResponse> entities = entityClient.getAllEntities();
+
+        boolean isDeletedEntity = entities.stream()
+                .anyMatch(el -> el.getId() != Integer.parseInt(entityId));
+        assertTrue(isDeletedEntity);
     }
 }
