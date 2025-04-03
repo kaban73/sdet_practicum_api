@@ -3,6 +3,7 @@ package tests;
 import clients.EntityClient;
 import dto.EntityRequest;
 import dto.EntityResponse;
+import io.qameta.allure.Step;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import utils.TestDataGenerator;
@@ -17,10 +18,12 @@ public class BaseTest {
     private final List<String> createdEntityIds = new ArrayList<>();
 
     @BeforeClass
+    @Step("Инициализация тестового клиента")
     public void init() {
         entityClient = new EntityClient();
     }
 
+    @Step("Создание новой сущности и получение её ID")
     protected String createEntityAndGetId() {
         EntityRequest request = TestDataGenerator.generateValidEntityRequest();
         String entityId = entityClient.createEntity(request);
@@ -30,6 +33,7 @@ public class BaseTest {
         return entityId;
     }
 
+    @Step("Проверка соответствия ответа запросу")
     protected void assertEntityMatchesRequest(EntityResponse response, EntityRequest request) {
         assertEquals(request.getTitle(), response.getTitle());
         assertEquals(request.isVerified(), response.isVerified());
@@ -46,6 +50,7 @@ public class BaseTest {
     }
 
     @AfterClass
+    @Step("Очистка тестовых данных")
     public void cleanup() {
         for (String entityId : createdEntityIds) {
             try {
