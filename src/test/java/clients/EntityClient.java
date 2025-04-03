@@ -56,7 +56,7 @@ public class EntityClient {
                 .statusCode(200)
                 .extract()
                 .jsonPath()
-                .getList(".", EntityResponse.class);
+                .getList("entity", EntityResponse.class);
     }
 
     /**
@@ -84,7 +84,7 @@ public class EntityClient {
                 .statusCode(200)
                 .extract()
                 .jsonPath()
-                .getList(".", EntityResponse.class);
+                .getList("entity", EntityResponse.class);
     }
 
     /**
@@ -94,6 +94,7 @@ public class EntityClient {
      */
     public void updateEntity(String id, EntityRequest entityRequest) {
         given()
+                .spec(ApiConfig.getRequestSpecification())
                 .body(entityRequest)
                 .when()
                 .patch(BASE_PATH + "/patch/{id}", id)

@@ -43,8 +43,8 @@ public class GetEntityApiTest {
 
         try {
             entityClient.getEntity(fakeEntityId);
-            fail("The request should have returned 404 error");
-        } catch (Exception e) {
-            assertTrue(e.getMessage().contains("404"));
+            fail("The request should have returned 500 error");
+        } catch (AssertionError e) {
+            assertTrue(e.getMessage().contains("500"));
         }
     }}

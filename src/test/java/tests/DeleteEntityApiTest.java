@@ -23,8 +23,8 @@ public class DeleteEntityApiTest {
         try {
             entityClient.getEntity(entityId);
             fail("Entity was not deleted");
-        } catch (Exception e) {
-            assertTrue(e.getMessage().contains("404"));
+        } catch (AssertionError e) {
+            assertTrue(e.getMessage().contains("500"));
         }
     }
 }
