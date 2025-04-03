@@ -3,7 +3,7 @@ package tests;
 import clients.EntityClient;
 import dto.EntityRequest;
 import dto.EntityResponse;
-import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import utils.TestDataGenerator;
 
@@ -45,7 +45,7 @@ public class BaseTest {
         );
     }
 
-    @AfterMethod
+    @AfterClass
     public void cleanup() {
         for (String entityId : createdEntityIds) {
             try {
