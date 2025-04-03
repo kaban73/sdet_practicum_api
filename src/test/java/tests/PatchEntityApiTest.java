@@ -54,6 +54,9 @@ public class PatchEntityApiTest {
 
         EntityRequest entityRequest = EntityRequest.builder()
                 .title("Update title " + System.currentTimeMillis())
+                .verified(request.isVerified())
+                .importantNumbers(request.getImportantNumbers())
+                .addition(request.getAddition())
                 .build();
 
         entityClient.updateEntity(entityId, entityRequest);
