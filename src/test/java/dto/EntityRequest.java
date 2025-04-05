@@ -1,27 +1,26 @@
 package dto;
 
 import com.google.gson.annotations.SerializedName;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
-@Data
+@Value
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
 public class EntityRequest {
     @SerializedName("addition")
-    private AdditionRequest addition;
+    @Builder.Default
+    AdditionRequest addition = null;
 
     @SerializedName("important_numbers")
-    private List<Integer> importantNumbers;
+    @Builder.Default
+    List<Integer> importantNumbers = List.of(1, 2, 3);
 
     @SerializedName("title")
-    private String title;
+    @Builder.Default
+    String title = "default_title";
 
     @SerializedName("verified")
-    private boolean verified;
+    @Builder.Default
+    boolean verified = true;
 }

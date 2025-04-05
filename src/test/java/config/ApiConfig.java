@@ -1,32 +1,12 @@
 package config;
 
-import io.qameta.allure.Description;
-import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
-import org.testng.annotations.BeforeSuite;
 
 public class ApiConfig {
     private static final String BASE_URL = "http://localhost:8080";
-
-    static {
-        configureRestAssured();
-    }
-
-    @BeforeSuite
-    @Description("Инициализация базовых настроек RestAssured")
-    public void setup() {
-        configureRestAssured();
-    }
-
-    /**
-     * Конфигурация RestAssured с базовыми настройками
-     */
-    private static void configureRestAssured() {
-        RestAssured.baseURI = BASE_URL;
-        RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
-    }
+    private static final String BASE_PATH = "/api";
 
     /**
      * @return Базовые спецификации запроса
@@ -35,6 +15,8 @@ public class ApiConfig {
         return new RequestSpecBuilder()
                 .setContentType(ContentType.JSON)
                 .setAccept(ContentType.JSON)
+                .setBaseUri(BASE_URL)
+                .setBasePath(BASE_PATH)
                 .build();
     }
 

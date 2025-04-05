@@ -16,6 +16,9 @@ import static org.testng.AssertJUnit.*;
 @Epic("API Тесты")
 @Story("Обновление сущностей")
 public class PatchEntityApiTest extends BaseTest {
+    private static final String TITLE_PREFIX = "Update title ";
+    private static final boolean UPDATED_VERIFIED_STATUS = false;
+    private static final List<Integer> UPDATED_NUMBERS = List.of(10, 20, 30);
     @Test
     @Description("Полное обновление сущности")
     @Feature("Обновление сущности")
@@ -23,9 +26,9 @@ public class PatchEntityApiTest extends BaseTest {
         String entityId = createEntityAndGetId();
 
         EntityRequest entityRequest = EntityRequest.builder()
-                .title("Update title " + System.currentTimeMillis())
-                .verified(false)
-                .importantNumbers(List.of(10, 20, 30))
+                .title(TITLE_PREFIX + System.currentTimeMillis())
+                .verified(UPDATED_VERIFIED_STATUS)
+                .importantNumbers(UPDATED_NUMBERS)
                 .addition(TestDataGenerator.generateValidAdditionRequest())
                 .build();
 
@@ -47,7 +50,7 @@ public class PatchEntityApiTest extends BaseTest {
         assertFalse(entityId.isEmpty());
 
         EntityRequest entityRequest = EntityRequest.builder()
-                .title("Update title " + System.currentTimeMillis())
+                .title(TITLE_PREFIX + System.currentTimeMillis())
                 .verified(request.isVerified())
                 .importantNumbers(request.getImportantNumbers())
                 .addition(request.getAddition())

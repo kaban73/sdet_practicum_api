@@ -37,12 +37,15 @@ public class BaseTest {
     protected void assertEntityMatchesRequest(EntityResponse response, EntityRequest request) {
         assertEquals(request.getTitle(), response.getTitle());
         assertEquals(request.isVerified(), response.isVerified());
-        if (request.getAddition() != null) {
-            assertEquals(
-                    request.getAddition().getAdditionalInfo(),
-                    response.getAddition().getAdditionalInfo()
-            );
-        }
+        assertNotNull(request.getAddition());
+        assertEquals(
+                request.getAddition().getAdditionalInfo(),
+                response.getAddition().getAdditionalInfo()
+        );
+        assertEquals(
+                request.getAddition().getAdditionalNumber(),
+                response.getAddition().getAdditionalNumber()
+        );
         assertEquals(
                 request.getImportantNumbers().size(),
                 response.getImportantNumbers().size()

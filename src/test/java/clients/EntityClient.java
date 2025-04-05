@@ -4,14 +4,13 @@ import config.ApiConfig;
 import dto.EntityRequest;
 import dto.EntityResponse;
 import io.qameta.allure.Step;
+import org.apache.http.HttpStatus;
 
 import java.util.List;
 
 import static io.restassured.RestAssured.given;
 
 public class EntityClient {
-    private static final String BASE_PATH = "/api";
-
     /**
      * Создание новой сущности
      * @param entityRequest DTO с данными для создания
@@ -23,9 +22,9 @@ public class EntityClient {
                 .spec(ApiConfig.getRequestSpecification())
                 .body(entityRequest)
                 .when()
-                .post(BASE_PATH + "/create")
+                .post("/create")
                 .then()
-                .statusCode(200)
+                .statusCode(HttpStatus.SC_OK)
                 .extract()
                 .asString()
                 ;
@@ -39,10 +38,11 @@ public class EntityClient {
     @Step("Получить сущность по ID = {id}")
     public EntityResponse getEntity(String id) {
         return given()
+                .spec(ApiConfig.getRequestSpecification())
                 .when()
-                .get(BASE_PATH + "/get/{id}", id)
+                .get("/get/{id}", id)
                 .then()
-                .statusCode(200)
+                .statusCode(HttpStatus.SC_OK)
                 .extract()
                 .as(EntityResponse.class);
     }
@@ -54,10 +54,11 @@ public class EntityClient {
     @Step("Получить список всех сущностей")
     public List<EntityResponse> getAllEntities() {
         return given()
+                .spec(ApiConfig.getRequestSpecification())
                 .when()
-                .get(BASE_PATH + "/getAll")
+                .get("/getAll")
                 .then()
-                .statusCode(200)
+                .statusCode(HttpStatus.SC_OK)
                 .extract()
                 .jsonPath()
                 .getList("entity", EntityResponse.class);
@@ -79,14 +80,15 @@ public class EntityClient {
             Integer perPage) {
 
         return given()
+                .spec(ApiConfig.getRequestSpecification())
                 .queryParam("title", title)
                 .queryParam("verified", verified)
                 .queryParam("page", page)
                 .queryParam("perPage", perPage)
                 .when()
-                .get(BASE_PATH + "/getAll")
+                .get("/getAll")
                 .then()
-                .statusCode(200)
+                .statusCode(HttpStatus.SC_OK)
                 .extract()
                 .jsonPath()
                 .getList("entity", EntityResponse.class);
@@ -103,9 +105,9 @@ public class EntityClient {
                 .spec(ApiConfig.getRequestSpecification())
                 .body(entityRequest)
                 .when()
-                .patch(BASE_PATH + "/patch/{id}", id)
+                .patch("/patch/{id}", id)
                 .then()
-                .statusCode(204);
+                .statusCode(HttpStatus.SC_NO_CONTENT);
     }
 
     /**
@@ -115,9 +117,10 @@ public class EntityClient {
     @Step("Удалить сущность с ID = {id}")
     public void deleteEntity(String id) {
         given()
+                .spec(ApiConfig.getRequestSpecification())
                 .when()
-                .delete(BASE_PATH + "/delete/{id}", id)
+                .delete("/delete/{id}", id)
                 .then()
-                .statusCode(204);
+                .statusCode(HttpStatus.SC_NO_CONTENT);
     }
 }
