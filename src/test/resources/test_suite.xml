@@ -1,0 +1,15 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="API Tests Suite" verbose="1" parallel="methods" thread-count="3">
+    <listeners>
+        <listener class-name="io.qameta.allure.testng.AllureTestNg"/>
+    </listeners>
+    <test name="API Tests">
+        <classes>
+            <class name="tests.CreateEntityApiTests"/>
+            <class name="tests.GetEntityApiTest"/>
+            <class name="tests.GetAllEntitiesApiTest"/>
+            <class name="tests.PatchEntityApiTest"/>
+            <class name="tests.DeleteEntityApiTest"/>
+        </classes>
+    </test>
+</suite>
