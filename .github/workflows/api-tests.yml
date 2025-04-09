@@ -46,3 +46,9 @@ jobs:
           name: test-results
           path: target/allure-results
           retention-days: 5
+
+    services:
+      api:
+        image: sdet_practicum_api
+        ports:
+          - 8080:8080
