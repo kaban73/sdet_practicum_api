@@ -17,6 +17,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Clone API repo
+        run: git clone https://github.com/bondarenkokate73/simbirsoft_sdet_project.git api-src
+
+      - name: Start services
+        run: |
+          cd api-src
+          docker-compose up -d
+          sleep 15
+
       - name: Set up JDK 19
         uses: actions/setup-java@v4
         with:
@@ -46,9 +55,3 @@ jobs:
           name: test-results
           path: target/allure-results
           retention-days: 5
-
-    services:
-      api:
-        image: sdet_practicum_api-service:latest
-        ports:
-          - 8080:8080
