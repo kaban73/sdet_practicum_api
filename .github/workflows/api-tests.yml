@@ -1,0 +1,48 @@
+name: API tests CI
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+  pull_request:
+    branches:
+        - main
+        - dev
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 19
+        uses: actions/setup-java@v3
+        with:
+          java-version: '19'
+          distribution: 'temurin'
+          cache: 'maven'
+
+      - name: Run API Tests with Maven
+        run: mvn clean test
+
+      - name: Generate Allure Report
+        if: always()
+        run: |
+          mvn allure:report
+
+      - name: Upload Allure Report as Artifact
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: allure-report
+          path: target/allure-report
+          retention-days: 5
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-results
+          path: target/allure-results
+          retention-days: 5
