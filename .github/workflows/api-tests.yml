@@ -49,6 +49,6 @@ jobs:
 
     services:
       api:
-        image: sdet_practicum_api
+        image: sdet_practicum_api-service:latest
         ports:
           - 8080:8080
